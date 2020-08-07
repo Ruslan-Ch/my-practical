@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .example {
+        color: purple;
+    }
+</style>
+<body>
+<h1>Hello</h1>
+<script>
+    x = 3;
+    y = 5;
+    z = x + y;
+    console.log(z);
+
+    document.write(z);
+
+    document.write("Sum: " + z + ", hello!");
+
+    console.log("Sum: " + z + ", hello!");
+
+    console.log(x,y,z);
+
+    document.write("<h2 class='example'>"+ z +"</h2>");
+
+    console.log("<h2 class='example'>"+ z +"</h2>");
+
+    x = '2';
+    y = 10;
+
+    x = parseInt(x); // parseInt преобразует строку в число, хорошо проверяет если есть еще и текст
+    // x = +x;
+    // +x = 1 * 'x';
+    // + плюс преобразовывает string в number
+
+   /* console.log(x + y);
+    console.log(x - y);
+    console.log(x / y);
+    console.log(x * y);
+    console.log(x % y);*/
+
+    /*height = +prompt('Enter h');  // V=π r2 h
+    console.log(height);
+
+    radius = +prompt('Enter radius');
+    console.log(radius);
+
+    console.log(Math.PI)*/
+
+    height = +prompt('Enter h');
+    radius = +prompt('Enter radius');
+
+    document.write("<p>'************'</p>" +
+                   "<p>'Объем цилиндра с помощью основы *S*(" + Math.PI * radius**2 + "), радиусом "+ radius +", и высотой "+ height +" равен:'</p>" +
+                   "<p>'-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'</p>" +
+                   "<p>'V = " + Math.PI * radius**2 * height +".'</p>" +
+                   "<p>'-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;'</p>" +
+                   "<p>'end.'</p>");
+</script>
+
+</body>
+</html>
+
+
+
+
+

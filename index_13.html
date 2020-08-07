@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 13</title>
+</head>
+<body>
+
+<table>
+    <tr class="cinema__item">
+        <td>Cinema Name 1</td>
+        <td>25$</td>
+    </tr>
+    <tr class="cinema__item">
+        <td></td>
+        <td>35$</td>
+    </tr>
+    <tr class="cinema__item">
+        <td>Cinema Name 3</td>
+        <td>75$</td>
+    </tr>
+    <tr class="cinema__item">
+        <td>Cinema Name 4</td>
+        <td></td>
+    </tr>
+    <tr class="cinema__item">
+        <td>Cinema Name 5</td>
+        <td>75$</td>
+    </tr>
+</table>
+
+<!--........... D_Z-13 ...я делал..........-->
+<!--
+1 Сформировать массив объектов, в котором объектом будет Фильм с полем name и price.
+2 Вывести в консоль массив с названием фильмов, которые имеют название и цену.
+3 Отобразить итоговую стоимость заказа для выше отфильтрованных фильмов.-->
+
+<script>
+    let cinema = document.querySelectorAll( '.cinema__item');
+    let CinemaArray = [];
+
+    class Film{
+        constructor(name, price){
+            this.name = name;
+            this.price = price;
+        }
+    };
+
+    for(film of cinema){
+        let cinemaObj = new Film(film.firstElementChild.innerText, film.lastElementChild.innerText);
+        //console.log(film.firstElementChild.innerText, film.lastElementChild.innerText);
+        CinemaArray.push(cinemaObj);
+    };
+    console.log(CinemaArray);
+
+    let reducedFilms = CinemaArray
+        .filter( item => item.name && item.price)
+    // .filter( function (item) {  //тоже самое как в  стрелочной функции
+    //     return item.name && item.price
+    // })
+    console.log(reducedFilms);
+
+    let result = reducedFilms.reduce(function (sum, item){
+        return sum + parseInt(item.price);
+    },0);
+    console.log('Total price of films  ' + result);
+</script>
+
+
+<!--........... D_Z-13 ...Max делал..........-->
+<!--<script>
+    class Film {
+        constructor(name,price) {
+            this.name = name;
+            this.price = price;
+        }
+    }
+
+    let films = document.querySelectorAll('tr'),
+        filmArray = [];
+
+    for(film of films){
+        let filmObj = new Film(film.firstElementChild.innerText, film.lastElementChild.innerText);
+        filmArray.push(filmObj);
+    }
+    console.log(filmArray);
+    let filterResults = filmArray.filter(film => film.name !== '' && film.price !== '');
+    console.log(filterResults);
+
+    for (i=0, overallSumm=0; i<filterResults.length;i++){
+        for (key in filterResults[i]){
+            if ( key === 'price'){
+                overallSumm+=parseInt(filterResults[i][key]);
+            }
+        }
+    }
+
+    console.log('Overall summ of this films is   '+overallSumm);
+
+</script>-->
+
+<script src="DZ_13.js"></script>
+
+</body>
+</html>

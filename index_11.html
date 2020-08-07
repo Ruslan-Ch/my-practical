@@ -1,0 +1,324 @@
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 11 | DOM</title>
+    <style>
+        .btn{
+            border: none;
+            background: #3F51B5;
+            color: white;
+            border-radius: 3px;
+            padding: 10px 20px;
+            transition: 0.2s;
+        }
+        .active{
+            background: #E91E63;
+        }
+        .btn[data-sale=today]{
+            background: green;
+        }
+
+        .block{
+            width: 100px;
+            height: 100px;
+            border: 5px solid #3F51B5;
+            margin: 10px 0;
+            position: relative;
+        }
+        .inner-block{
+            width: 30px;
+            height: 30px;
+            border: 3px solid #E91E63;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<button data-sale="today" class="btn">Click me</button>
+
+<div class="block">
+    <div class="inner-block"></div>
+</div>
+
+<ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+</ul>
+
+<script src="DZ_11.js"></script>
+</body>
+</html>-->
+
+
+
+<!--........... D_Z-11 ...я делал..........-->
+<!--
+Создать блок по середине экрана. При нажатии на стрелки - блок смещается в соответствующем направлении.
+Блок должен "упираться в экран", т.е. не может выйти за пределы экрана.
+1) блок не вываливается за экран
+2) при каждом "врезании" в стенку - блок отпрыгивает на step*2 пикселей в противоположном направлении.
+3) При каждом отпрыгивании - по середине блока появляется надпись "БЭМС", которая исчезает через 2 секунды
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .block1{
+            height: 200px;
+            width: 200px;
+            border: solid 10px green;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: transparent;
+        }
+        .block2 {
+            border: solid 10px red;
+            color: orange;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="block1">
+    <div class="inner-block">
+        <h1>БЭМС</h1>
+    </div>
+
+</div>
+
+
+<script>
+    let block1 = document.querySelector('.block1');
+    console.dir(block1);
+
+    // console.dir(block1.clientWidth);
+    let widthBlock = block1.clientWidth;
+    let heightBlock = block1.clientHeight;
+    console.dir(widthBlock);
+    console.dir(heightBlock);
+
+    //console.log(block1.type, block1.target);
+
+    /*block1.onmouseover = function(){
+        console.log(arguments);
+    }*/
+    function eventName1(ev) {
+        console.log(ev.type, ev.target, ev);
+    }
+  /*  block1.onmousemove = function(event){
+        console.log('hello');
+    }*/
+
+    block1.onmouseout = function(event){
+        eventName1(event);
+    }
+
+    document.addEventListener('keypress', eventName1);
+
+    document.addEventListener('keydown', movingBlock1);
+
+
+    let block2 = document.querySelector('.block1');
+
+    let step = 50;
+
+    function boom() {
+        block2.classList.add('block2');
+
+        setTimeout(function () {
+            block2.classList.remove('block2');
+
+
+        },2000);
+    }
+
+   //console.dir(block1.getBoundingClientRect());
+
+    function movingBlock1(event) {
+        console.dir(event);
+        console.dir(event.key);
+     if(event.key === 'ArrowRight'){
+         block1.style.left = block1.offsetLeft+step+'px';
+         ;
+         console.dir(document.documentElement.clientWidth);
+
+         if(block1.offsetLeft >= (document.documentElement.clientWidth-(widthBlock/2))){
+             block1.style.left = block1.offsetLeft-(step*2)+'px';
+             //console.dir(block1.style.width);
+             boom();
+         }
+
+     } else if (event.key === 'ArrowLeft'){
+         block1.style.left = block1.offsetLeft-step+'px';
+
+         //console.dir(block1.clientWidth/2);
+         console.dir(widthBlock);
+
+         if(block1.offsetLeft <= (block1.clientWidth-(widthBlock/2))){
+             block1.style.left = block1.offsetLeft+(step*2)+'px';
+             //console.dir(block1.style.width);
+             boom();
+         };
+         // console.dir(block1.getBoundingClientRect());
+              //console.dir(document.getBoundingClientRect());
+         console.dir(document.documentElement.clientWidth)
+         // console.dir(document.documentElement.clientHeight)
+         // console.dir(block1.clientLeft)
+          //console.dir(block1.offsetLeft);
+     } else if (event.key === 'ArrowDown'){
+         block1.style.top = block1.offsetTop+step+'px';
+
+         console.dir(block1.getBoundingClientRect());
+         console.dir(block1.getClientRects());
+
+         if(block1.offsetTop >= (document.documentElement.clientHeight-(heightBlock/2))){
+             block1.style.top = block1.offsetTop-(step*2)+'px';
+             //console.dir(block1.style.width);
+             boom();
+         };
+
+         // console.dir(document.documentElement.clientWidth)
+         // console.dir(document.documentElement.clientHeight)
+         // console.dir(block1.clientHeight)
+         //console.dir(block1.documentElement.clientWidth);
+     } else if (event.key === 'ArrowUp'){
+         block1.style.top = block1.offsetTop-step+'px';
+
+         if(block1.offsetTop <= (block1.clientHeight-(heightBlock/2))){
+             block1.style.top = block1.offsetTop+(step*2)+'px';
+             //console.dir(block1.style.width);
+             boom();
+         };
+     }
+    };
+
+    console.dir(block1.getBoundingClientRect());
+    elemPoints = block1.getBoundingClientRect();
+    console.dir(elemPoints);
+    console.dir(elemPoints.left);
+
+</script>
+</body>
+</html>
+
+
+<!--........... D_Z-11 ...Макс делал..........-->
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson 11</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .square{
+            color: white;
+            width: 200px;
+            height: 200px;
+            border: 2px solid darkblue;
+            position: absolute;
+            left: 50%;
+            top:50%;
+            transform: translate(-50%, -50%)
+        }
+        .crush{
+            background-color: red;
+            color: blue;
+            font-size: 36px;
+            font-weight: bold;
+            line-height: 200px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="square">БЭМС</div>
+<script>
+
+    let replace = document.querySelector('.square');
+
+    console.dir(replace);
+    document.onkeydown=function (event) {
+        console.log(event);
+        let startPositionLeft= replace.offsetLeft;
+        startPositionTop= replace.offsetTop;
+        step = 50;
+        currentPositionLeft=0;
+        currentPositionTop=0;
+        elemPoints = replace.getBoundingClientRect();
+
+        console.log("("+elemPoints.top+' верх элемента)'+"("+elemPoints.bottom+" низ элемента)"+"("+elemPoints.left+" левый край элемента)"+"("+elemPoints.right+" правый край элемента)");
+        console.log(document.documentElement.clientWidth +'    ширина окна');
+        console.log(document.documentElement.clientHeight +'    высота окна');
+
+        if (event.key === 'ArrowRight'){
+            replace.style.left= startPositionLeft+50+'px';
+            currentPositionLeft=parseInt(replace.style.left);
+            if (elemPoints.right>=document.documentElement.clientWidth-25){               /*в этих местах у меня кастыль*/
+                replace.style.left= ((document.documentElement.clientWidth-elemPoints.width/2) - step*2)+ 'px';
+                replace.classList.add('crush');
+                setTimeout(function () {
+                    replace.classList.remove('crush')
+                },2000)
+            }
+        }
+        if (event.key === 'ArrowLeft'){
+            replace.style.left= startPositionLeft-50+'px';
+            currentPositionLeft=replace.style.left;
+            if (elemPoints.left<=35){                                                   /*в этих местах у меня кастыль*/
+                replace.style.left= (elemPoints.width/2 + step*2)+ 'px';
+                replace.classList.add('crush');
+                setTimeout(function () {
+                    replace.classList.remove('crush')
+                },2000)
+            }
+        }
+        if (event.key === 'ArrowUp'){
+            replace.style.top= startPositionTop-50+'px';
+            currentPositionTop=replace.style.top;
+            if (elemPoints.top<=35){                                                   /*в этих местах у меня кастыль*/
+                replace.style.top= (elemPoints.height/2 + step*2)+ 'px';
+                replace.classList.add('crush');
+                setTimeout(function () {
+                    replace.classList.remove('crush')
+                },2000)
+            }
+        }
+        if (event.key === 'ArrowDown'){
+            replace.style.top= startPositionTop+50+'px';
+            currentPositionTop=replace.style.top;
+            if (elemPoints.bottom>=document.documentElement.clientHeight-35){       /*в этих местах у меня кастыль*/
+                replace.style.top= ((document.documentElement.clientHeight-elemPoints.height/2) - step*2)+ 'px';
+                replace.classList.add('crush');
+                setTimeout(function () {
+                    replace.classList.remove('crush')
+                },2000)
+            }
+        }
+
+    };
+</script>
+</body>
+</html>
+-->
