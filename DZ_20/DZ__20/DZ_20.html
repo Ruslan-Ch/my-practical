@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .tesla {
+            text-align: center;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 35px;
+            width: 25px;
+            margin: 1px 2px;
+            background-color: #bbb;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .color-picker {
+            text-align: center;
+        }
+
+        .solid-black {
+            background-color: #2E2E2E;
+        }
+
+        .midnight-silver {
+            background-color: #43424F;
+        }
+
+        .obsidian-black {
+            background-color: #000000;
+        }
+
+        .deep-blue {
+            background-color: #212252;
+        }
+
+        .silver {
+            background-color: #A8A1A2;
+        }
+
+        .white {
+            background-color: #ECEBEC;
+        }
+
+        .red {
+            background-color: #c31130;
+        }
+
+        .orange {
+            background-color: #F68B28;
+        }
+
+        yellow {
+            background-color: #FBB842;
+        }
+
+        .glacier-blue {
+            background-color: #BBCBD0;
+        }
+
+        .electric-blue {
+            background-color: #0F93DA;
+        }
+
+        .green-lotus {
+            background-color: #3d7866;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="tesla">
+    <img src="" alt="" class="tesla_car">
+</div>
+
+<div class="color-picker">
+    <span class="dot solid-black"></span>
+    <span class="dot midnight-silver"></span>
+    <span class="dot obsidian-black"></span>
+    <span class="dot deep-blue"></span>
+    <span class="dot silver"></span>
+    <span class="dot white"></span>
+    <span class="dot red"></span>
+    <span class="dot orange"></span>
+    <span class="dot yellow"></span>
+    <span class="dot glacier-blue"></span>
+    <span class="dot electric-blue"></span>
+    <span class="dot green-lotus"></span>
+</div>
+<script>
+
+    // DZ 20. Render cars
+    // 1. Забираем json c https://raw.githubusercontent.com/brightestsirius/tesla/master/tesla.json
+    // 2. Отрисовываем данные с полученного файла по примеру https://mc-astro.github.io/tesla-roadster-colors/.
+    // 3. При нажатии на цветной квадратик отображаем соответствующего цвета машину.
+
+    let getFile = async function () {
+        let responseUrl = await fetch('https://raw.githubusercontent.com/brightestsirius/tesla/master/tesla.json');
+        let result = await responseUrl.json();
+        return result;
+
+    }
+    getFile()
+        .then(
+            (a) => {
+                console.log(a)
+                function changeColorCar(item, color) {
+                    document.querySelector('.tesla_car').src = a['solid-black'];
+                    document.querySelector(`.${color}`).onclick = function () {
+                        document.querySelector('.tesla_car').src = item;
+                    }
+                }
+                changeColorCar((a['deep-blue']), 'deep-blue');
+                changeColorCar((a['electric-blue']), 'electric-blue');
+                changeColorCar((a['glacier-blue']), 'glacier-blue');
+                changeColorCar((a['green-lotus']), 'green-lotus');
+                changeColorCar((a['midnight-silver']), 'midnight-silver');
+                changeColorCar((a['obsidian-black']), 'obsidian-black');
+                changeColorCar((a['orange']), 'orange');
+                changeColorCar((a['red']), 'red');
+                changeColorCar((a['silver']), 'silver');
+                changeColorCar((a['solid-black']), 'solid-black');
+                changeColorCar((a['white']), 'white');
+                changeColorCar((a['yellow']), 'yellow');
+            })
+
+</script>
+</body>
+</html>
+
+<!--
+Вариант с добавлениями классов-->
+
+<!--
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 35px;
+            width: 25px;
+            margin: 1px 2px;
+            background-color: #bbb;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .color-picker {
+            text-align: center;
+        }
+
+        .solid-black {
+            background-color: #2E2E2E;
+        }
+
+        .red {
+            background-color: #c31130;
+        }
+
+        .orange {
+            background-color: #F68B28;
+        }
+
+        .mySlides {
+            display: none;
+            text-align: center;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+<div class="mySlides fade">
+    <img src="https://raw.githubusercontent.com/brightestsirius/tesla/master/cars/black.jpg" alt="tesla roadster Black">
+    <div class="text">Solid Black</div>
+</div>
+
+<div class="mySlides fade">
+    <img src="https://raw.githubusercontent.com/brightestsirius/tesla/master/cars/very-orange.jpg">
+    <div class="text">Orange</div>
+</div>
+
+<div class="mySlides fade">
+    <img src="https://raw.githubusercontent.com/brightestsirius/tesla/master/cars/red.jpg"
+         alt="tesla roadster Red Multi-Coat">
+    <div class="text">Red Multi-Coat</div>
+</div>
+
+<div class="color-picker">
+    <span class="dot solid-black" onclick="currentSlide(1)"></span>
+    <span class="dot orange" onclick="currentSlide(2)"></span>
+    <span class="dot red" onclick="currentSlide(3)"></span>
+
+</div>
+
+<script>
+    let slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        let i;
+        let slides = document.getElementsByClassName("mySlides");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
+</script>
+</body>
+</html>
+-->
+

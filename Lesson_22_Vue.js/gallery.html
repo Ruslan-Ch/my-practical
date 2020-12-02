@@ -1,0 +1,26 @@
+<template>
+	<div id="app8">
+		<p>{{ x }}</p>
+		<p>{{ y }}</p>
+		getCustomValue: {{ getCustomValue() }}
+		<button @click="onClick">Click me</button>
+	</div>
+</template>
+
+<script>
+	new Vue({
+		el: '#app8',
+		data: appData,
+		methods: {
+			onClick,
+			getCustomValue(){
+				return this.x + this.y + this.inner.z;
+			}
+		}
+	})
+</script>
+
+<style lang="sass">
+	#app8
+		background: red
+</style>

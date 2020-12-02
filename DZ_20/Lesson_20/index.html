@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<style>
+  p {
+    margin: 4px;
+    font-size: 16px;
+    font-weight: bolder;
+    cursor: pointer;
+  }
+  .blue {
+    color: blue;
+  }
+  .highlight {
+    background: yellow;
+  }
+  </style>
+</head>
+<body>
+
+	<form action="/">
+		<label>
+			Animal
+			<input type="radio" name="joke__category">
+		</label>
+		<label>
+			Cat
+			<input type="radio" name="joke__category">
+		</label>
+		<label>
+			Dog
+			<input type="radio" name="joke__category">
+		</label>
+
+		<input type="text">
+		<button type="submit"></button>
+	</form>
+	<a href="/" id="emailing">link</a>
+
+	<p id="myParagraph"></p>
+	<p id="myParagraphSecond"></p>
+
+	<ul class="level-1">
+	  <li class="item-i">I</li>
+	  <li class="item-ii">II
+	    <ul class="level-2">
+	      <li class="item-a">A</li>
+	      <li class="item-b">B
+	        <ul class="level-3">
+	          <li class="item-1">1</li>
+	          <li class="item-2">2</li>
+	          <li class="item-3">3</li>
+	        </ul>
+	      </li>
+	      <li class="item-c">C</li>
+	    </ul>
+	  </li>
+	  <li class="item-iii">III</li>
+	</ul>
+
+
+	<div class="parent" style="border: 1px solid black; padding: 10px;">
+		
+	</div>
+
+	<p class="blue">Click to toggle</p>
+	<p class="blue highlight">highlight</p>
+	<p class="blue">on these</p>
+	<p class="blue">paragraphs</p>
+
+	
+	<script src='node_modules/jquery/dist/jquery.min.js'></script>
+	<script src="js/script.js"></script>
+
+</body>
+</html>
+
+
+
+
+
+

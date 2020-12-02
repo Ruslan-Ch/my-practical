@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Joke</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        .render_joke {
+            background-color: lightgray;
+            width: 500px;
+            height: 200px;
+            border: 1px solid blue;
+        }
+        .button_get_joke {
+            background-color: #7487ff;
+        }
+        .pJoke {
+            padding: 5px;
+            margin: 0;
+        }
+        .category_joke_radio {
+            display: none;
+        }
+        .highlight {
+            background: #deffff;
+            font-weight:bold;
+            font-size: 15px;
+            text-transform: uppercase;
+        }
+        .category_name {
+            display: none;
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Hey!</h1>
+<h2>Let`s try to find a joke for you:</h2>
+
+<form>
+    <label>
+        <input type="radio" name="getJoke" value="random" class="category_joke2">Random<br>
+    </label>
+    <label >
+        <input type="radio" name="getJoke" value="category" class="category_joke">Category
+    </label>
+
+    <div class="category_name">
+        <div class="category_name__inner">
+        </div>
+    </div>
+
+    <br>
+
+    <button  class="button_get_joke">Get a joke</button>
+
+</form>
+
+<br>
+<div class="joke_text">
+    <br>
+</div>
+<div class="render_joke">
+
+</div>
+
+<script>
+    'use strict';
+
+    // ДЗ 21. Jokes dashboard
+    // https://www.figma.com/file/UuLVgVYlWPKvdLtmPZ3aye/Untitled?node-id=0%3A1
+    // 1. Используйте API Чака Норриса, чтобы получать анекдоты в формате JSON - https://api.chucknorris.io/
+    // 2. Возможность получить случайную шутку.
+    // 3. Возможность получить случайную шутку из категорий (использовать API, чтобы получить все доступные категории).
+    // 4. Возможность получать анекдоты с помощью свободного текстового поиска.
+    //https://api.chucknorris.io/jokes/random?category={category}
+    //https://api.chucknorris.io/jokes/random?category=animal
+    //https://api.chucknorris.io/jokes/random
+
+
+    // getJokeCategory('random');
+    // getJokeCategory('random?category=animal');
+    // getJokeCategory('https://api.chucknorris.io/jokes/categories');
+
+    class Joke {
+        constructor(url) {
+            this.url = url;
+        }
+
+        async getJoke() {
+            let response = await fetch(this.url),
+                joke = await response.json();
+            return Promise.resolve(joke);
+        }
+    };
+
+    function getJokeCategory(data) {
+        console.log(data);
+        if (data === 'categories') {
+            new Joke("https://api.chucknorris.io/jokes/" + `${data}`)
+                .getJoke()
+                .then(
+                    data => {
+                        for (let i of data) {
+                            let divJokeCategory = document.querySelector('.category_name__inner');
+                            divJokeCategory.style.display = 'flex';
+                            divJokeCategory.style.flexFlow = 'wrap';
+                            divJokeCategory.style.width = '600px';
+                            let label = document.createElement('label');
+                            label.className = "label_style";
+                            divJokeCategory.append(label);
+                            let p = document.createElement('p');
+                            p.className = "pJoke";
+                            p.innerHTML = `${i}`;
+                            console.log(p.innerHTML);
+                            label.append(p);
+                            let inputJokeCategory = document.createElement('input');
+                            inputJokeCategory.type = "radio";
+                            inputJokeCategory.name = "getJoke";
+                            inputJokeCategory.className = "category_joke_radio";
+                            inputJokeCategory.value = `${'random?category=' + i}`;
+                            label.append(inputJokeCategory);
+                        }
+                    }
+                )
+        } else {
+            new Joke("https://api.chucknorris.io/jokes/" + `${data}`)
+                .getJoke()
+                .then(
+                    data => {
+                        console.log(data);
+
+                        let renderJoke = document.querySelector('.render_joke');
+                        let categoryName = document.querySelector('.joke_text');
+                        if (data.categories === undefined) {
+                            categoryName.innerHTML = 'Category:   ' + 'Please choose joke of category!',
+                                renderJoke.innerHTML = '';
+                        } else (
+                            categoryName.innerHTML = 'Category:   ' + data.categories,
+                                renderJoke.innerHTML = data.value
+                        )
+                    }
+                )
+        }
+    }
+
+    function checkRadioJokeRandom(event) {
+        let nameInput = document.getElementsByName('getJoke');//value
+        for (let i = 0; i < nameInput.length; i++) {
+            if (nameInput[i].checked) {
+                return getJokeCategory(nameInput[i].value);
+            }
+        }
+    }
+
+    getJokeCategory('categories');
+
+    function checkRadioJokeCategory() {
+        let categoryName = document.querySelector('.category_name');
+        let categoryJoke = document.querySelector('.category_joke');
+        if (categoryJoke.checked) {
+            categoryName.style.display = 'block';
+        }
+    }
+
+    function checkRadioJokeCategory2() {
+        let categoryName = document.querySelector('.category_name');
+        let categoryJoke = document.querySelector('.category_joke2');
+        if (categoryJoke.checked) {
+            categoryName.style.display = 'none';
+        }
+    }
+
+    let input2 = document.querySelector('.category_joke2');
+    input2.addEventListener("click", checkRadioJokeCategory2);
+
+
+    //-----На пример – диаграмму Ба-Гуа делаем выделение категорий шуток
+
+    let categoryName = document.querySelector('.category_name');
+    let selectedP;
+
+    categoryName.onclick = function (event) {
+        let target = event.target;
+
+        while (target != this) {
+            if (target.tagName === 'P') {
+                highlight(target);
+                return;
+            }
+            target = target.parentNode;
+        }
+    }
+
+    function highlight(node) {
+        if (selectedP) {
+            selectedP.classList.remove('highlight');
+        }
+        selectedP = node;
+        selectedP.classList.add('highlight');
+    }
+
+    //-----+++++++++++
+
+    let input = document.querySelector('.category_joke');
+    input.addEventListener("click", checkRadioJokeCategory);
+
+    let button = document.querySelector('.button_get_joke');
+    button.addEventListener("click", checkRadioJokeRandom);
+    button.addEventListener('click', (e) => {
+        e.preventDefault();
+    });
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        div {
+            display: block;
+        }
+        img{
+            width: 100%;
+        }
+        .slideshow-container {
+            max-width: 1000px;
+            position: relative;
+            margin: auto;
+        }
+        .color-picker{
+            margin: 0 10px 60px 10px;
+            text-align: center;
+        }
+        .dot {
+            cursor: pointer;
+            height: 35px;
+            width: 25px;
+            margin: 1px 2px;
+            background-color: #bbb;
+            border-radius: 2px;
+            display: inline-block;
+            transition: box-shadow 0.6s ease;
+        }
+        .solid-black {
+            background-color: #2E2E2E;
+        }
+        .midnight-silver {
+            background-color: #43424F;
+        }
+        .obsidian-black {
+            background-color: #000000;
+        }
+        .deep-blue {
+            background-color: #212252;
+        }
+        .silver {
+            background-color: #A8A1A2;
+        }
+        .white {
+            background-color: #ECEBEC;
+        }
+        .red {
+            background-color: #c31130;
+        }
+        .orange {
+            background-color: #F68B28;
+        }
+        .yellow {
+            background-color: #FBB842;
+        }
+        .glacier-blue {
+            background-color: #BBCBD0;
+        }
+        .electric-blue {
+            background-color: #0F93DA;
+        }
+        .green-lotus {
+            background-color: #3d7866;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="slideshow-container">
+        <img src="https://raw.githubusercontent.com/brightestsirius/tesla/master/cars/blue.jpg" alt="">
+    </div>
+</div>
+<div class="color-picker">
+    <span class="dot solid-black "></span>
+    <span class="dot midnight-silver"></span>
+    <span class="dot obsidian-black"></span>
+    <span class="dot deep-blue"></span>
+    <span class="dot silver"></span>
+    <span class="dot white"></span>
+    <span class="dot red"></span>
+    <span class="dot orange"></span>
+    <span class="dot yellow"></span>
+    <span class="dot glacier-blue"></span>
+    <span class="dot electric-blue"></span>
+    <span class="dot green-lotus"></span>
+</div>
+<script>
+    async function execute() {
+        let url = 'https://raw.githubusercontent.com/brightestsirius/tesla/master/tesla.json';
+        let response = await fetch(url);
+        let dataFile = await response.json();
+        return dataFile
+    }
+    execute().then(value => {
+        console.log(value)
+        let colorChanger=document.querySelector('.color-picker'),
+            mainImg=document.querySelector('img');
+        colorChanger.onclick= function(event){
+            let target = event.target;
+            for (let key in value ){
+                if (target.className.includes(key)){
+                    mainImg.src=value[key]
+                }
+            }
+        };
+    });
+</script>
+</body>
+</html>

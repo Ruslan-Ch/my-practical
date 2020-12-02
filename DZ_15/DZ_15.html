@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lesson 15 task 2</title>
+</head>
+<body>
+<!--<script src="DZ_15.js"></script>-->
+<script>
+
+
+
+/*........... D_Z-15.1 ... делала Катя..........*/
+
+/*Добавить всем массивам геттер – render, который будет выводить массив в документ,
+в виде таблицы (номер ячейки и значение ячейки).*/
+
+/*Object.defineProperty(Array.prototype, 'render',{
+get: function render() {
+let res = `<table style="border-collapse: collapse;">`;
+    let i = 0;
+    this.forEach((item) => {
+    res += `
+    <tr>
+        <td style="border: 1px solid black; padding: 5px;">${i++}</td>
+        <td style="border: 1px solid black; padding: 5px;">${item}</td>
+    </tr>
+    `;
+    });
+    res += `</table>`;
+return res;
+}
+});
+
+window.onload = function() {
+let A = [2, 5, 7, 'hallo everybody!', 8, false, 9, undefined, 10, 3];
+document.write(A.render);
+};*/
+
+
+
+/*........... D_Z-15.2 ... делал Макс..........*/
+    // У объекта data создать свойство геттер `model` и сеттер `model`. Которое обрабатывает  данные после двух обращений.
+    //     При первом обращении сохраняется строка. Например: `data.model = 'Hello, how, are you?'`
+    // При втором обращении к сеттеру происходит нарезание строки по переданному символу и сохранение результата в
+    // свойство str. Например: `data.model = ","`
+    //     `console.log(data.str) -> ['Hello', ' how', ' are you?']`
+    // ----------------------
+    //     Геттер `data.model` возвращает символы, которые были удалены (при втором вызове сеттера) и их количество
+    //     в виде объекта.
+    //     `console.log(data.model); -> { symbol: ',', count: 2 }`
+
+
+    /*let data = {
+
+        get model (){
+            let someObj={};
+            someObj.symbol=this.symbol;
+            someObj.count=this.str.length-1;
+            return someObj
+        },
+        set model(value){
+            if(!this.str){
+                this.str=value
+            }
+            else {
+                this.str=this.str.split(value);
+                this.symbol=value;
+            }
+
+        },
+    };
+    data.model='Lorem ipsum, dolor sit amet, consectetur, adipisicing elit. Accusamus, consequatur, doloribus';
+    console.log(data.str);
+    data.model=',';
+    console.log(data.str);
+    console.log(data.model);*/
+
+
+
+/*........... D_Z-15.3 ... делал я..вариант 1........*/
+
+// Создать сеттер `model` (не связывать с задачей №2), который принимает объект и выполняет `update` всех существующих
+// свойств в текущем объекте.
+//
+//
+//     `obj = {x:10, y: 20, p: 15};`
+//
+//     `obj.model = { x: { value: 33, operation: '*' }, z: { value: 75, operation: '+' }, p: { value: 4, operation: '%' } }`
+//
+//     `console.log(obj); -> {x:330, y: 20, z: 75, p: 3}`
+
+
+/*let obj = {
+    x:10,
+    y: 20,
+    p: 15
+};
+
+Object.defineProperty(obj, 'model', {
+    set (Update) {
+        if (Update.x  ){
+            if (this.x){
+                this.x = this.x * Update.x.value
+            } else {
+                this.x = Update.x.value
+            }
+        }
+        if (Update.y  ){
+            if (this.y){
+                this.y = this.y * Update.y.value
+            } else {
+                this.y = Update.y.value
+            }
+        }
+        if (Update.p  ){
+            if (this.p){
+                this.p = this.p % Update.p.value
+            } else {
+                this.p = Update.p.value
+            }
+        }
+        if (Update.z  ){
+            if (this.z){
+                this.z = this.z * Update.z.value
+            } else {
+                this.z = Update.z.value
+            }
+        }
+    }
+});
+
+obj.model = {
+    x: {
+        value: 33,
+        operation: '*' },
+    z: {
+        value: 75,
+        operation: '-'
+    },
+    p: {
+        value: 4,
+        operation: '%'
+    }
+};
+
+console.log(obj);*/
+
+/*........... D_Z-15.3 ... делал я..вариант 2........*/
+
+/*
+let obj = {
+    x:10,
+    y: 20,
+    p: 15
+};
+
+Object.defineProperty(obj, 'model', {
+    set (valueUpdate) {
+        let newObg = {};
+        for(let i = 0, arrays = [obj, valueUpdate]; i < arrays.length; i++){
+            for(let key in arrays[i]){  //console.log(key); //console.log(arrays[i][key]); значение
+                if(newObg[key] == undefined){
+                    newObg[key] = arrays[i][key];
+                    //console.log(arrays[i][key].value);
+                    //console.log(arrays[i][key].value);
+                    //console.log(key);
+                    //console.log((newObg[key]));
+                } else if (key === 'x'){
+                    newObg[key] = newObg[key] * arrays[i][key].value;
+                } else if (key === 'z') {
+                    newObg[key] = newObg[key] + arrays[i][key].value;
+                } else if (key === 'p') {
+                    newObg[key] = newObg[key] % arrays[i][key].value;
+                };
+            };
+
+            for ( let i in newObg){
+                if ( typeof newObg[i] == 'object') {
+                    newObg[i] =  newObg[i].value;
+                }
+            }
+        }
+
+        valueUpdate =newObg;
+        obj = valueUpdate;
+
+    }
+});
+
+obj.model = {
+    x: {
+        value: 33,
+        operation: '*' },
+    z: {
+        value: 75,
+        operation: '+'
+    },
+    p: {
+        value: 4,
+        operation: '%'
+    }
+};
+
+console.log(obj);*/
+
+
+/*........... D_Z-15.3 ... делала др........*/
+
+/*let obj = {x:10, y: 20, p: 15};
+
+Object.defineProperty(obj, "model", {
+
+    set (value) {
+
+        this.x = value.x ? eval((this.x || 0) + ' '+ value.x.operation + ' ' + value.x.value) : this.x;
+        this.y = value.y? eval((this.y || 0) + ' '+ value.y.operation + ' ' + value.y.value) :this.y;
+        this.p = value.p ? eval((this.p || 0) + ' '+ value.p.operation + ' ' + value.p.value) : this.p;
+        this.z = value.z ? eval((this.z || 0)+ ' '+ value.z.operation + ' ' + value.z.value) : this.z;
+
+    }
+})
+
+console.log(obj);
+obj.model = { x: { value: 33, operation: '*' }, z: { value: 75, operation: '+' }, p: { value: 4, operation: '%' } };
+
+console.log(obj);*/
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lesson 19</title>
+</head>
+<body>
+<script>
+
+    //DZ 19
+    // Сделать 3 асинхронные операции (симулируем при помощью функции getPromise(), внутри которой находится
+    // setTimeout(resolve(),timer)). В каждом промисе (getPromise) возвращается число от 0 до 100.
+    // Создать обертку runAfter(), которая получает в качестве аргумента – 3 функции в массиве,
+    // которые выполнятся после окончания всех 3-х асинхронных операций.
+    //
+    //     Например:
+    //
+    // function afterFirstPromise(){};
+    // function afterSecondPromise(){};
+    // function afterThirdPromise(){};
+    //
+    // function runAfter([afterFirstPromise,afterSecondPromise,afterThirdPromise]){}
+
+
+    async function getPromise(timer) {
+        let promise = new Promise(resolve => {
+            setTimeout(() => {
+                    resolve();
+                }, timer
+            );
+        });
+        let result = await promise;
+        return result;
+    }
+
+    function afterFirstPromise() {
+        let randomNam = Math.floor(Math.random() * Math.floor(101));
+        return randomNam;
+    };
+
+    function afterSecondPromise() {
+        let randomNam = Math.floor(Math.random() * Math.floor(101));
+        return randomNam;
+    };
+
+    function afterThirdPromise() {
+        let randomNam = Math.floor(Math.random() * Math.floor(101));
+        return randomNam;
+    };
+
+    function runAfter([afterFirstPromise, afterSecondPromise, afterThirdPromise]) {
+
+        Promise.all([
+            getPromise(3000)
+                .then(
+                    () => {
+                        console.log(`afterFirstPromise  ${afterFirstPromise}`);
+                        return afterFirstPromise;
+                    }
+                ),
+            getPromise(1000)
+                .then(
+                    () => {
+                        console.log(`afterSecondPromise  ${afterSecondPromise}`);
+                        return afterSecondPromise;
+                    }
+                ),
+            getPromise(2000)
+                .then(
+                    () => {
+                        console.log(`afterThirdPromise   ${afterThirdPromise}`);
+                        return afterThirdPromise;
+                    }
+                )
+
+        ]).then(values => {
+            console.log(values);
+        });
+    };
+
+    runAfter([afterFirstPromise(), afterSecondPromise(), afterThirdPromise()])
+
+    //по другому
+
+    /*let getPromise = async function (timer) {
+        let promise = new Promise((resolve, reject) => {
+                setTimeout(
+                    () => resolve( Math.floor(Math.random() * 100) ),
+
+                timer);
+        });
+        let result = await promise;
+        return result;
+    }
+    let runAfter = async function ([a, b, c]) {
+        let result = await Promise.all([a, b, c])
+        console.log(result);
+    }
+    runAfter([getPromise(2000), getPromise(3000), getPromise(5000)]);*/
+</script>
+</body>
+</html>

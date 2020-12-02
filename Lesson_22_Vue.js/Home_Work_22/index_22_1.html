@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home Work 22_1</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+
+<div id="TaskManager">
+    <ol>
+        <li>
+            <b>First list</b>
+            <span v-if="ul1.length===0">(All deals have done =)))</span>
+        </li>
+        <li v-for="(item, key) in ul1">
+            {{ item.message }}
+        </li>
+    </ol>
+    <button @click="onClickFirst">transfer</button>
+
+    <ol>
+        <li>
+            <b>Second list</b>
+            <span v-if="ul2.length===0">(All deals have done =)))</span>
+        </li>
+        <li v-for="(item, key) in ul2">
+            {{ item.message }}
+        </li>
+    </ol>
+    <button @click="onClickSecond">transfer</button>
+
+</div>
+
+<script>
+
+    // 22_1
+    // Создать приложение TaskManager. У нас есть два списка дел. В конце каждого списка есть кнопка
+    // transfer. При нажатии на кнопку – последний элемент списка переносится в начало другого списка.
+
+    let TaskManager = new Vue({
+        el: '#TaskManager', // ссылка на элемент
+        data: {
+            ul1: [
+                {message: 'List 1, Element 1'},
+                {message: 'List 1, Element 2'},
+                {message: 'List 1, Element 3'},
+            ],
+            ul2: [
+                {message: 'List 2, Element 1'},
+                {message: 'List 2, Element 2'},
+                {message: 'List 2, Element 3'},
+            ],
+        },
+        methods: {
+            onClickFirst: function () {
+                if(this.ul2.length>0){
+                    console.log(this.ul1.length)
+                    this.ul1.unshift(this.ul2[this.ul2.length-1]);
+                    this.ul2.pop();
+                }
+            },
+            onClickSecond: function () {
+                if(this.ul1.length>0){
+                    this.ul2.unshift(this.ul1[this.ul1.length-1]);
+                    this.ul1.pop();
+                }
+            }
+        }
+    })
+
+</script>
+</body>
+</html>

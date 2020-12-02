@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Lesson 23 | Vue compomemt</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<style>
+		.example{
+			border: 1px solid black;
+			padding: 10px;
+			margin: 10px 0;
+		}
+		.primary{
+			background: lightgreen;
+			border: none;
+		}
+		.secondary{
+			background: lightblue;
+			border: none;
+		}
+	</style>
+</head>
+<body>
+
+	<div class="app">
+		<input type="text" v-model="ex">
+		
+		<front-end
+			:number="list"
+		>
+		</front-end>
+
+		{{list}}
+
+		<btn-temp title='Click me' type='primary' :on-click="onClick"></btn-temp>
+		<btn-temp title='Add block' type='secondary'></btn-temp>
+
+	</div>
+
+	<script src="script.js"></script>
+</body>
+</html>
